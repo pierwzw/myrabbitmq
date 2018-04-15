@@ -23,11 +23,12 @@ public class Send {
         factory.setPort(5672);
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
-
+        //channel.queueDeclare(queueName, durable, exclusive, autoDelete, argss)
         channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         int count = 1;
         while(true){
             String message = "Hello World--------------" + count++;
+            //basicPublish(exchange, routingKey, mandatory, immediate, props, body)
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
             Thread.sleep(1000);

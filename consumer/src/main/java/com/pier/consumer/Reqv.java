@@ -1,9 +1,6 @@
 package com.pier.consumer;
 
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.QueueingConsumer;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.*;
 
 public class Reqv {
     private final static String QUEUE_NAME = "hello";
@@ -22,6 +19,7 @@ public class Reqv {
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
         QueueingConsumer consumer = new QueueingConsumer(channel);
         channel.basicConsume(QUEUE_NAME, true, consumer);
+        channel.basicGet(QUEUE_NAME, true);
         while(true){
             QueueingConsumer.Delivery delivery = consumer.nextDelivery();
             String message = new String(delivery.getBody());
